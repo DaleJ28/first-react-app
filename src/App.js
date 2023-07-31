@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import Home from './Home';
-import Movie from './Movie';
+import Movie from "./Movie";
 
 import './App.css';
 
@@ -11,7 +11,7 @@ const NotFound = () => {
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/first-react-app">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">Movie Finder 2</Link>      
       </nav>
