@@ -1,15 +1,9 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
-import { json, checkStatus } from './utils';
+import { json, checkStatus } from "./utils";
 
 const Movie = (props) => {
-  const {
-    Title,
-    Year,
-    imdbID,
-    Type,
-    Poster,
-  } = props.movie;
+  const { Title, Year, imdbID, Type, Poster } = props.movie;
 
   return (
     <div className="row">
@@ -21,20 +15,22 @@ const Movie = (props) => {
       <div className="col-8 col-md-10 col-lg-11 mb-3">
         <Link to={`/movie/${imdbID}/`}>
           <h4>{Title}</h4>
-          <p>{Type} | {Year}</p>
+          <p>
+            {Type} | {Year}
+          </p>
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
 class MovieFinder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: '',
+      searchTerm: "",
       results: [],
-      error: '',
+      error: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -57,19 +53,19 @@ class MovieFinder extends React.Component {
       .then(checkStatus)
       .then(json)
       .then((data) => {
-        if (data.Response === 'False') {
+        if (data.Response === "False") {
           throw new Error(data.Error);
         }
 
-        if (data.Response === 'True' && data.Search) {
+        if (data.Response === "True" && data.Search) {
           console.log(data);
-          this.setState({ results: data.Search, error: '' });
+          this.setState({ results: data.Search, error: "" });
         }
       })
       .catch((error) => {
         this.setState({ error: error.message });
         console.log(error);
-      })
+      });
   }
 
   render() {
@@ -80,14 +76,18 @@ class MovieFinder extends React.Component {
         <div className="row">
           <div className="col-12">
             <form onSubmit={this.handleSubmit} className="form-inline my-4">
-              <input
-                type="text"
-                className="form-control mr-sm-2"
-                placeholder="frozen"
-                value={searchTerm}
-                onChange={this.handleChange}
-              />
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  className="form-control mr-sm-2"
+                  placeholder="Search for a movie"
+                  value={searchTerm}
+                  onChange={this.handleChange}
+                />
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </div>
             </form>
             {(() => {
               if (error) {
@@ -95,12 +95,12 @@ class MovieFinder extends React.Component {
               }
               return results.map((movie) => {
                 return <Movie key={movie.imdbID} movie={movie} />;
-              })
+              });
             })()}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
